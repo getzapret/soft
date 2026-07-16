@@ -55,6 +55,16 @@
 
   .grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
 
+  .category{margin-bottom:44px;}
+  .category-title{
+    display:flex; align-items:center; gap:10px;
+    font-size:13px; font-weight:600; letter-spacing:0.3px;
+    color:var(--text-lo); margin-bottom:16px;
+    text-transform:uppercase;
+  }
+  .category-title svg{width:15px; height:15px; color:var(--text-faint);}
+  .category-title .line{flex:1; height:1px; background:var(--line);}
+
   .prog-card{
     position:relative;
     display:flex; flex-direction:column; gap:16px;
@@ -105,6 +115,8 @@
   .card-tgws:hover .prog-arrow{color:#38b6ff;}
   .card-pulse{--card-accent:rgba(168,85,247,0.35);}
   .card-pulse:hover .prog-arrow{color:#a855f7;}
+  .card-fl{--card-accent:rgba(255,106,61,0.35);}
+  .card-fl:hover .prog-arrow{color:#ff6a3d;}
 
   .soon-card{
     display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -138,62 +150,105 @@
 
   <nav>
     <div class="brand"><span class="dot"></span> SOFT</div>
-    <div class="count">3 программы</div>
+    <div class="count">4 программы</div>
   </nav>
 
   <div class="hero">
     <h1>Всё в одном месте</h1>
-    <p>Небольшая подборка проверенных программ — обход блокировок, ускорение Telegram и визуальные моды. Открывай нужную карточку.</p>
+    <p>Небольшая подборка проверенных программ — обход блокировок, ускорение Telegram, визуальные моды и софт для творчества. Открывай нужную карточку.</p>
   </div>
 
-  <div class="grid">
+  <div class="category">
+    <div class="category-title">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6V12C4 16.5 7.5 20.5 12 22C16.5 20.5 20 16.5 20 12V6L12 2Z" stroke="currentColor" stroke-width="1.5"/></svg>
+      Утилиты
+      <span class="line"></span>
+    </div>
+    <div class="grid">
 
-    <a href="zapret.html" class="prog-card card-zapret">
-      <div class="prog-icon">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M12 2L4 6V12C4 16.5 7.5 20.5 12 22C16.5 20.5 20 16.5 20 12V6L12 2Z" stroke="#f4c430" stroke-width="1.4" fill="rgba(244,196,48,0.08)"/>
-          <path d="M9 12L11 14L15.5 9.5" stroke="#f4c430" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div>
-        <div class="prog-name">Zapret</div>
-        <div class="prog-tag">Обход блокировок Discord и YouTube без VPN</div>
-      </div>
-      <div class="prog-arrow">Открыть <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
-    </a>
+      <a href="zapret.html" class="prog-card card-zapret">
+        <div class="prog-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L4 6V12C4 16.5 7.5 20.5 12 22C16.5 20.5 20 16.5 20 12V6L12 2Z" stroke="#f4c430" stroke-width="1.4" fill="rgba(244,196,48,0.08)"/>
+            <path d="M9 12L11 14L15.5 9.5" stroke="#f4c430" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="prog-name">Zapret</div>
+          <div class="prog-tag">Обход блокировок Discord и YouTube без VPN</div>
+        </div>
+        <div class="prog-arrow">Открыть <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      </a>
 
-    <a href="tgwsproxy.html" class="prog-card card-tgws">
-      <div class="prog-icon">
-        <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="9" stroke="#38b6ff" stroke-width="1.4" fill="rgba(56,182,255,0.08)"/>
-          <path d="M8 12H16M13 8L16 12L13 16" stroke="#38b6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div>
-        <div class="prog-name">TG WS Proxy</div>
-        <div class="prog-tag">Локальный прокси, восстанавливающий связь Telegram Desktop</div>
-      </div>
-      <div class="prog-arrow">Открыть <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
-    </a>
+      <a href="tgwsproxy.html" class="prog-card card-tgws">
+        <div class="prog-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="#38b6ff" stroke-width="1.4" fill="rgba(56,182,255,0.08)"/>
+            <path d="M8 12H16M13 8L16 12L13 16" stroke="#38b6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="prog-name">TG WS Proxy</div>
+          <div class="prog-tag">Локальный прокси, восстанавливающий связь Telegram Desktop</div>
+        </div>
+        <div class="prog-arrow">Открыть <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      </a>
 
-    <a href="pulsevisuals.html" class="prog-card card-pulse">
-      <div class="prog-icon">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M3 12H7L9.5 5L14.5 19L17 12H21" stroke="#a855f7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div>
-        <div class="prog-name">PulseVisuals</div>
-        <div class="prog-tag">Лицензионный лаунчер визуальных эффектов для Minecraft PvP</div>
-      </div>
-      <div class="prog-arrow">Открыть <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
-    </a>
-
-    <div class="soon-card">Новые программы появятся здесь</div>
-
+    </div>
   </div>
 
-  <footer>Все программы распространяются в оригинальном виде·</footer>
+  <div class="category">
+    <div class="category-title">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/></svg>
+      Программы
+      <span class="line"></span>
+    </div>
+    <div class="grid">
+
+      <a href="flstudio.html" class="prog-card card-fl">
+        <div class="prog-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="4" width="18" height="16" rx="3" stroke="#ff6a3d" stroke-width="1.4" fill="rgba(255,106,61,0.08)"/>
+            <path d="M8 9V17M12 7V17M16 11V17" stroke="#ff6a3d" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="prog-name">FL Studio 26</div>
+          <div class="prog-tag">DAW для создания музыки</div>
+        </div>
+        <div class="prog-arrow">Открыть <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="category-title">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="12" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M7 10V14M5 12H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="10.5" r="1" fill="currentColor"/><circle cx="18.5" cy="13" r="1" fill="currentColor"/></svg>
+      Игры
+      <span class="line"></span>
+    </div>
+    <div class="grid">
+
+      <a href="pulsevisuals.html" class="prog-card card-pulse">
+        <div class="prog-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M3 12H7L9.5 5L14.5 19L17 12H21" stroke="#a855f7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="prog-name">PulseVisuals</div>
+          <div class="prog-tag">Лицензионный лаунчер визуальных эффектов для Minecraft PvP</div>
+        </div>
+        <div class="prog-arrow">Открыть <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      </a>
+
+      <div class="soon-card">Новые игры появятся здесь</div>
+
+    </div>
+  </div>
+
+  <footer>Все программы распространяются в оригинальном виде · Используй на свой страх и риск</footer>
 
 </div>
 
