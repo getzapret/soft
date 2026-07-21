@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umbrella</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#08080a;
+    --bg-1:#0f0f12;
+    --line:rgba(255,255,255,0.09);
+    --glass:rgba(255,255,255,0.055);
+    --glass-strong:rgba(255,255,255,0.10);
+    --text-hi:#f6f6f8;
+    --text-lo:#93939c;
+    --text-faint:#5c5c65;
+    --accent:#d14f4f;
+    --accent-rgb:209,79,79;
+    --accent-dim:rgba(209, 79, 79, 0.16);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--bg-0);
+    color:var(--text-hi);
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  h1,h2,.brand{font-family:'Space Grotesk',sans-serif;}
+
+  .bg-orb{position:fixed; border-radius:50%; filter:blur(90px); pointer-events:none; z-index:0;}
+  .bg-orb-1{width:480px;height:480px;background:rgba(255,255,255,0.06);top:-160px;left:-140px;}
+  .bg-orb-2{width:420px;height:420px;background:rgba(var(--accent-rgb),0.06);bottom:0;right:-120px;}
+  .bg-orb-3{width:360px;height:360px;background:rgba(255,255,255,0.04);top:45%;left:50%;transform:translate(-50%,-50%);}
+
+  .noise{
+    position:fixed; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events:none; z-index:1;
+  }
+
+  .wrap{position:relative; z-index:2; max-width:640px; margin:0 auto; padding:64px 24px 100px;}
+
+  nav{display:flex; align-items:center; justify-content:space-between; margin-bottom:56px;}
+  .brand{font-size:17px; font-weight:700; letter-spacing:0.3px; display:flex; align-items:center; gap:9px;}
+  .brand-link{text-decoration:none; color:var(--text-hi);}
+  .brand .dot{width:7px;height:7px;border-radius:50%; background:var(--accent); box-shadow:0 0 10px var(--accent);}
+  .hub-link{
+    display:flex; align-items:center; gap:7px;
+    font-size:12px; color:var(--text-lo); letter-spacing:0.3px;
+    text-decoration:none; border:1px solid var(--line);
+    padding:6px 12px 6px 10px; border-radius:100px;
+    transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  .hub-link svg{width:13px; height:13px;}
+  .hub-link:hover{border-color:rgba(var(--accent-rgb),0.4); color:var(--text-hi);}
+
+  .card{
+    position:relative;
+    padding:40px 32px 32px;
+    border-radius:28px;
+    text-align:center;
+    background:var(--glass);
+    backdrop-filter:blur(26px) saturate(150%);
+    -webkit-backdrop-filter:blur(26px) saturate(150%);
+    border:1px solid var(--line);
+    box-shadow:0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+    animation:rise 0.8s cubic-bezier(.2,.9,.25,1) both;
+    margin-bottom:22px;
+  }
+  @keyframes rise{from{opacity:0; transform:translateY(20px) scale(0.98);} to{opacity:1; transform:translateY(0) scale(1);}}
+
+  .icon-wrap{
+    width:96px;height:96px;
+    margin:0 auto 22px;
+    border-radius:24px;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(145deg, rgba(255,255,255,0.14), rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.12);
+    box-shadow:0 6px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+    animation:float 5s ease-in-out infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  .icon-wrap svg{width:46px;height:46px;}
+
+  .filename{font-size:16px; font-weight:600; letter-spacing:0.2px; margin-bottom:6px; word-break:break-word;}
+  .meta{font-size:12.5px; color:var(--text-lo); margin-bottom:26px; letter-spacing:0.3px;}
+
+  .download-btn{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:100%; padding:15px 18px; border-radius:16px;
+    border:1px solid rgba(var(--accent-rgb),0.35);
+    background:linear-gradient(180deg, rgba(var(--accent-rgb),0.22), rgba(var(--accent-rgb),0.06));
+    color:var(--text-hi); font-size:14.5px; font-weight:600; letter-spacing:0.2px;
+    text-decoration:none; cursor:pointer;
+    transition:transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    box-shadow:0 4px 16px rgba(var(--accent-rgb),0.08), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+  .download-btn:hover{
+    transform:translateY(-2px);
+    background:linear-gradient(180deg, rgba(var(--accent-rgb),0.30), rgba(var(--accent-rgb),0.09));
+    box-shadow:0 10px 26px rgba(var(--accent-rgb),0.14), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .download-btn:active{transform:translateY(0);}
+  .download-btn svg{width:18px;height:18px;flex-shrink:0;}
+  .footnote{margin-top:16px; font-size:11px; color:var(--text-faint);}
+
+  .av-note{
+    display:flex; gap:10px; align-items:flex-start;
+    margin-top:18px; padding:13px 14px;
+    border-radius:14px;
+    border:1px solid rgba(var(--accent-rgb),0.22);
+    background:rgba(var(--accent-rgb),0.05);
+    text-align:left;
+  }
+  .av-note svg{width:17px; height:17px; flex-shrink:0; margin-top:1px;}
+  .av-note span{font-size:11.5px; line-height:1.55; color:var(--text-lo);}
+
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity 0.7s ease, transform 0.7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  section{margin-top:64px;}
+  .eyebrow{font-size:11.5px; color:var(--accent); letter-spacing:1.5px; text-transform:uppercase; font-weight:600; margin-bottom:10px;}
+  h2{font-size:22px; font-weight:600; margin-bottom:14px; letter-spacing:0.2px;}
+  p.body-text{font-size:14.5px; line-height:1.7; color:var(--text-lo);}
+  p.body-text b{color:var(--text-hi); font-weight:600;}
+  code{background:rgba(255,255,255,0.08); padding:2px 6px; border-radius:6px; font-size:0.92em;}
+  a.inline-link{color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(var(--accent-rgb),0.35);}
+  a.inline-link:hover{border-bottom-color:var(--accent);}
+
+  .feature-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px;}
+  .feature-chip{
+    padding:16px 14px; border-radius:16px;
+    border:1px solid var(--line);
+    background:var(--glass); backdrop-filter:blur(20px);
+    transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .feature-chip:hover{border-color:rgba(var(--accent-rgb),0.3); background:var(--glass-strong);}
+  .feature-chip .f-title{font-size:13px; font-weight:600; margin-bottom:5px; color:var(--text-hi);}
+  .feature-chip .f-desc{font-size:12px; color:var(--text-lo); line-height:1.5;}
+
+  .steps{list-style:none; margin-top:24px; display:flex; flex-direction:column; gap:2px;}
+  .step{
+    display:flex; gap:16px; padding:18px 20px;
+    border:1px solid var(--line); border-radius:16px;
+    background:var(--glass); backdrop-filter:blur(20px);
+    margin-bottom:10px;
+    transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .step:hover{border-color:rgba(var(--accent-rgb),0.3); background:var(--glass-strong);}
+  .step-num{
+    flex-shrink:0; width:28px; height:28px; border-radius:9px;
+    background:var(--accent-dim); color:var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:700; font-family:'Space Grotesk',sans-serif;
+  }
+  .step-text{font-size:14px; color:var(--text-lo); line-height:1.6; padding-top:3px;}
+  .step-text b{color:var(--text-hi);}
+
+  .faq-item{
+    border:1px solid var(--line); border-radius:16px;
+    background:var(--glass); backdrop-filter:blur(20px);
+    margin-bottom:10px; overflow:hidden;
+  }
+  .faq-q{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 20px; cursor:pointer; font-size:14px; font-weight:600;
+    user-select:none;
+  }
+  .faq-q .plus{font-size:18px; color:var(--text-faint); transition:transform 0.3s ease; font-weight:400;}
+  .faq-item.open .faq-q .plus{transform:rotate(45deg); color:var(--accent);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height 0.35s ease;}
+  .faq-a-inner{padding:0 20px 18px; font-size:13.5px; color:var(--text-lo); line-height:1.65;}
+  .faq-item.open .faq-a{max-height:220px;}
+
+  footer{
+    margin-top:70px; text-align:center;
+    font-size:11.5px; color:var(--text-faint);
+    padding-top:24px; border-top:1px solid var(--line);
+  }
+
+  @media (max-width:480px){
+    .wrap{padding:40px 18px 80px;}
+    .card{padding:32px 22px 26px;}
+    .feature-grid{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){*{animation:none !important; transition:none !important;}}
+</style>
+</head>
+<body>
+
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+<div class="bg-orb bg-orb-3"></div>
+<div class="noise"></div>
+
+<div class="wrap">
+
+  <nav>
+    <a href="index.html" class="brand-link"><div class="brand"><span class="dot"></span> Umbrella</div></a>
+    <a href="index.html" class="hub-link">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.6"/><rect x="14" y="3" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="14" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.6"/><rect x="14" y="14" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.6"/></svg>
+      Ещё программы
+    </a>
+  </nav>
+
+  <div class="card">
+    <div class="icon-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-umbrella-2">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M5.343 7.343a8 8 0 1 1 11.314 11.314l-11.314 -11.314" />
+          <path d="M10.828 13.34l-4.242 4.243a2 2 0 1 0 2.828 2.828" />
+      </svg>
+    </div>
+    <div class="filename">Umbrella_Loader.rar</div>
+    <div class="meta">Готово к установке · Windows x64</div>
+
+    <a href="https://workupload.com/file/xvFvy6k5LDT" target="_blank" rel="noopener" class="download-btn" id="downloadBtn">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3V15M12 15L7 10M12 15L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4 18H20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Скачать
+    </a>
+    <div class="footnote">Встроенная лицензия · не требует активации</div>
+
+    <div class="av-note">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L4 6V12C4 16.5 7.5 20.5 12 22C16.5 20.5 20 16.5 20 12V6L12 2Z" stroke="var(--accent)" stroke-width="1.4"/>
+        <path d="M12 8V13" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="12" cy="16" r="0.9" fill="var(--accent)"/>
+      </svg>
+      <span>Антивирусные программы могут ложно реагировать на чит Umbrella. Перед скачиванием и запуском временно отключите антивирус</span>
+    </div>
+  </div>
+
+  <section class="reveal">
+    <div class="eyebrow">Что это</div>
+    <h2>Чит Umbrella для Dota 2</h2>
+    <p class="body-text">
+      <b>Umbrella</b> — это популярный многофункциональный софт, созданный специально для улучшения игрового процесса в Dota 2. Программа помогает эффективнее ориентироваться в матчах и предоставляет игроку дополнительные инструменты для комфортного управления. Данный инструмент пользуется большой известностью в игровом сообществе благодаря своей стабильной работе.
+    </p>
+
+    <div class="feature-grid">
+      <div class="feature-chip">
+        <div class="f-title">Радиус способностей</div>
+        <div class="f-desc">Отображение точных радиусов атак, умений и башен на карте для идеального позиционирования</div>
+      </div>
+      <div class="feature-chip">
+        <div class="f-title">Индикатор купона</div>
+        <div class="f-desc">Таймеры и зоны поражения ключевых способностей в реальном времени</div>
+      </div>
+      <div class="feature-chip">
+        <div class="f-title">Автоматические скрипты</div>
+        <div class="f-desc">Помощь в мгновенном применении предметов и способностей в критических ситуациях</div>
+      </div>
+      <div class="feature-chip">
+        <div class="f-title">Информация о противниках</div>
+        <div class="f-desc">Отслеживание скрытых перемещений врагов, таймингов их фарма и перезарядки предметов</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="eyebrow">Установка</div>
+    <h2>Как запустить</h2>
+    <ul class="steps">
+      <li class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><b>Скачиваем</b> и переносим <code>Umbrella_Loader.exe</code> в любую папку.</div>
+      </li>
+      <li class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><b>Запускаем</b> лаунчер и ждем загрузки файлов.</div>
+      </li>
+      <li class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><b>Ждем</b> когда откроется Dota2.</div>
+      </li>
+      <li class="step">
+        <div class="step-num">4</div>
+        <div class="step-text"><b>Открываем</b> меню на INSERT и настраиваем чит.</div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="reveal">
+    <div class="eyebrow">Вопросы</div>
+    <h2>Частое</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Банят ли за Umbrella? <span class="plus">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">Да, использование софта нарушает правила игры и может привести к блокировке аккаунта.</div></div>
+    </div>
+  </section>
+
+  <footer>Umbrella не связан с Steam</footer>
+
+</div>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  }, {threshold:0.15});
+  reveals.forEach(r=>io.observe(r));
+
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.querySelector('.faq-q').addEventListener('click', ()=>{
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>
